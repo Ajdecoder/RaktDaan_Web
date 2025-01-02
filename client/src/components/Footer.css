@@ -1,0 +1,23 @@
+/* Keyframe animation for left-to-right effect */
+@keyframes slideInFromLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  /* Hide sections by default */
+  footer:not(.footer-visible) .footer-section {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  
+  /* Apply animation when footer becomes visible */
+  footer.footer-visible .footer-section {
+    animation: slideInFromLeft 0.8s ease-in-out forwards;
+  }
+  
