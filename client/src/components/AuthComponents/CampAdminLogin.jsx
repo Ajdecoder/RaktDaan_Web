@@ -28,7 +28,7 @@ const CampAdminLogin = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* email */}
           <div>
-            <label
+            <label 
               htmlFor="email"
               className="block text-sm font-medium text-gray-700"
             >
