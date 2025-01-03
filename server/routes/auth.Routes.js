@@ -1,5 +1,5 @@
 import express from 'express';
-import { donorLogin, campAdminLogin, raktdaanLogin, addBloodBank, donorRegister, campAdminRegister, bloodBankRegister } from '../controllers/authController.js';
+import { donorLogin, campAdminLogin, raktdaanLogin, donorRegister, campAdminRegister,  } from '../controllers/authController.js';
 
 const authRoutes = express.Router();
 
@@ -10,8 +10,6 @@ authRoutes.post('/camp-admin-login', campAdminLogin);
 authRoutes.post('/camp-admin-register', campAdminRegister);
 authRoutes.post('/raktdaan-login', raktdaanLogin);
 
-// Blood Bank Routes
-authRoutes.post('/add-bloodbank', addBloodBank);
-authRoutes.post('/bloodbank-register', bloodBankRegister);
+
 
 export default authRoutes;

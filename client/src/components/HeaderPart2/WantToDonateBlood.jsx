@@ -20,7 +20,7 @@ const WantToDonateBlood = () => {
 
   return (
     <div className="p-20 min-h-screen flex items-center justify-center bg-gradient-to-r from-green-400 to-blue-500">
-      <div className="max-w-4xl w-full bg-white rounded-lg shadow-lg p-8">
+      <div className="max-w-4xl w-full bg-white rounded-lg shadow-lg p-8 hover:scale-105 transition-transform duration-300">
         <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-6">
           Become a Blood Donor
         </h1>

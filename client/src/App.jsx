@@ -11,8 +11,8 @@ import VideoGallery from "./components/HeaderPart1/VideoGallery";
 import MobileApps from "./components/HeaderPart1/MobileApp";
 import WantToDonateBlood from "./components/HeaderPart2/WantToDonateBlood";
 import BloodDonationCamps from "./components/HeaderPart2/BloodDonationCamps";
-import DonorLogin from "./components/HeaderPart2/DonorLogin";
-import CampAdminLogin from "./components/HeaderPart2/CampAdminLogin";
+import DonorLogin from "./components/AuthComponents/DonorLogin";
+import CampAdminLogin from "./components/AuthComponents/CampAdminLogin";
 import VoluntaryDonorGroup from "./components/HeaderPart2/VoluntaryDonorGroup";
 import BloodAvailability from "./components/HeaderPart2/BloodAvailability";
 import BloodBankDirectory from "./components/HeaderPart2/BloodBankDirectory";
@@ -24,6 +24,8 @@ import ScrollProgress from "./components/utils/ScrollProgress";
 import CampRegistration from "./components/CampRegistration";
 import Gallery from "./components/HeaderPart1/ImageGallery";
 import NotificationPage from "./components/HeaderPart1/Notification";
+import DonorSignup from "./components/AuthComponents/DonorSignup";
+import CampAdminSignup from "./components/AuthComponents/CampAdminSignup";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -85,9 +87,12 @@ function App() {
               <Route path="/blood-donation-camps" element={<BloodDonationCamps />} />
               <Route path="/donor-login" element={<DonorLogin />} />
               <Route path="/camp-admin-login" element={<CampAdminLogin />} />
+              <Route path="/camp-admin-register" element={<CampAdminSignup />} />
               <Route path="/voluntary-donor-group" element={<VoluntaryDonorGroup />} />
               <Route path="/register-voluntary-blood-camp" element={<CampRegistration />} />
               <Route path="/gallery" element={<Gallery />} />
+              <Route path="/notifications" element={<NotificationPage />} />
+              <Route path="/donor-register" element={<DonorSignup />} />
               <Route path="/notifications" element={<NotificationPage />} />
             </Routes>
           </main>

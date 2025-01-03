@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const CampAdminLogin = () => {
   const [credentials, setCredentials] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -25,20 +26,20 @@ const CampAdminLogin = () => {
           Welcome back! Please login to manage your blood donation camp.
         </p>
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Username */}
+          {/* email */}
           <div>
             <label
-              htmlFor="username"
+              htmlFor="email"
               className="block text-sm font-medium text-gray-700"
             >
-              Username
+              Email
             </label>
             <input
-              type="text"
-              name="username"
-              id="username"
-              placeholder="Enter your username"
-              value={credentials.username}
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Enter your email"
+              value={credentials.email}
               onChange={handleChange}
               className="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
               required
@@ -72,6 +73,20 @@ const CampAdminLogin = () => {
           >
             Login
           </button>
+          <div className="text-center mt-4 flex justify-center gap-10">
+            <a
+              href="/forgot-password"
+              className="text-sm text-blue-600 hover:underline"
+            >
+              Forgot Password?
+            </a>
+            <Link
+              to="/camp-admin-register"
+              className="text-sm text-blue-600 hover:underline"
+            >
+              No account? Register as a Camp Admin
+            </Link>
+          </div>
         </form>
       </div>
     </div>
