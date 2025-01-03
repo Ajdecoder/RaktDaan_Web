@@ -1,4 +1,3 @@
-// src/components/CampAdminLogin.jsx
 import React, { useState } from "react";
 
 const CampAdminLogin = () => {
@@ -17,34 +16,64 @@ const CampAdminLogin = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold text-center mb-8">Camp Admin Login</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={credentials.username}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg"
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={credentials.password}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg"
-          required
-        />
-        <button
-          type="submit"
-          className="bg-green-600 text-white py-2 px-4 rounded-lg"
-        >
-          Login
-        </button>
-      </form>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-500">
+      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
+        <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-6">
+          Camp Admin Login
+        </h1>
+        <p className="text-lg text-center text-gray-600 mb-8">
+          Welcome back! Please login to manage your blood donation camp.
+        </p>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Username */}
+          <div>
+            <label
+              htmlFor="username"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Username
+            </label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              placeholder="Enter your username"
+              value={credentials.username}
+              onChange={handleChange}
+              className="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+              required
+            />
+          </div>
+
+          {/* Password */}
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Enter your password"
+              value={credentials.password}
+              onChange={handleChange}
+              className="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+              required
+            />
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg text-lg font-semibold hover:bg-indigo-700 transition-all"
+          >
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

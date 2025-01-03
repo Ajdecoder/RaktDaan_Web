@@ -3,29 +3,13 @@ import React, { useState } from 'react';
 const AddYourBloodbank = () => {
   const [formData, setFormData] = useState({
     bloodbankName: '',
-    parentHospital: '',
-    shortName: '',
-    category: '',
     contactPerson: '',
     email: '',
     contactNumber: '',
-    firstRegistrationDate: '',
-    licenceNo: '',
-    fromDate: '',
-    toDate: '',
-    componentFacility: '',
-    apheresisFacility: '',
-    helplineNumber: '',
     address1: '',
-    address2: '',
     pincode: '',
     latitude: '',
     longitude: '',
-    website: '',
-    noOfBeds: '',
-    state: '',
-    district: '',
-    city: '',
   });
 
   const handleChange = (e) => {
@@ -40,13 +24,13 @@ const AddYourBloodbank = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md">
-      <h2 className="text-2xl font-semibold text-center mb-6">Add Your Bloodbank</h2>
+    <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+      <h2 className="text-3xl font-semibold text-center text-blue-600 mb-6">Add Your Bloodbank</h2>
       <form onSubmit={handleSubmit}>
         {/* Blood Bank Details */}
         <fieldset className="mb-6">
-          <legend className="text-lg font-bold mb-4">Blood Bank Details</legend>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <legend className="text-lg font-bold text-blue-600 mb-4">Blood Bank Information</legend>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label htmlFor="bloodbankName" className="block mb-2">Blood Bank Name*</label>
               <input
@@ -55,29 +39,10 @@ const AddYourBloodbank = () => {
                 id="bloodbankName"
                 value={formData.bloodbankName}
                 onChange={handleChange}
-                className="w-full p-2 border rounded"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
                 required
               />
             </div>
-            <div>
-              <label htmlFor="parentHospital" className="block mb-2">Parent Hospital Name</label>
-              <input
-                type="text"
-                name="parentHospital"
-                id="parentHospital"
-                value={formData.parentHospital}
-                onChange={handleChange}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-            {/* Add more fields similarly */}
-          </div>
-        </fieldset>
-
-        {/* Contact Information */}
-        <fieldset className="mb-6">
-          <legend className="text-lg font-bold mb-4">Contact Information</legend>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label htmlFor="contactPerson" className="block mb-2">Contact Person*</label>
               <input
@@ -86,10 +51,17 @@ const AddYourBloodbank = () => {
                 id="contactPerson"
                 value={formData.contactPerson}
                 onChange={handleChange}
-                className="w-full p-2 border rounded"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
                 required
               />
             </div>
+          </div>
+        </fieldset>
+
+        {/* Contact Information */}
+        <fieldset className="mb-6">
+          <legend className="text-lg font-bold text-blue-600 mb-4">Contact Details</legend>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label htmlFor="email" className="block mb-2">Email</label>
               <input
@@ -98,26 +70,37 @@ const AddYourBloodbank = () => {
                 id="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full p-2 border rounded"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
               />
             </div>
-            {/* Add more fields similarly */}
+            <div>
+              <label htmlFor="contactNumber" className="block mb-2">Contact Number*</label>
+              <input
+                type="tel"
+                name="contactNumber"
+                id="contactNumber"
+                value={formData.contactNumber}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                required
+              />
+            </div>
           </div>
         </fieldset>
 
         {/* Address Details */}
         <fieldset className="mb-6">
-          <legend className="text-lg font-bold mb-4">Postal Address</legend>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <legend className="text-lg font-bold text-blue-600 mb-4">Postal Address</legend>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label htmlFor="address1" className="block mb-2">Address1*</label>
+              <label htmlFor="address1" className="block mb-2">Address Line 1*</label>
               <input
                 type="text"
                 name="address1"
                 id="address1"
                 value={formData.address1}
                 onChange={handleChange}
-                className="w-full p-2 border rounded"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
                 required
               />
             </div>
@@ -129,16 +112,34 @@ const AddYourBloodbank = () => {
                 id="pincode"
                 value={formData.pincode}
                 onChange={handleChange}
-                className="w-full p-2 border rounded"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
                 required
               />
             </div>
-            {/* Add more fields similarly */}
+          </div>
+        </fieldset>
+
+        {/* Google Map */}
+        <fieldset className="mb-6">
+          <legend className="text-lg font-bold text-blue-600 mb-4">Location on Map</legend>
+          <div className="w-full">
+            <iframe
+              src={`https://www.google.com/maps?q=${formData.latitude},${formData.longitude}&output=embed`}
+              width="100%"
+              height="400"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
           </div>
         </fieldset>
 
         {/* Submit Button */}
-        <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-lg">
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold"
+        >
           Submit
         </button>
       </form>
