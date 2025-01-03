@@ -2,8 +2,17 @@ import express from 'express';
 import { connectDB } from './config/db.js';
 import {userRoutes} from './routes/userRoutes.js'
 import authRoutes from './routes/auth.Routes.js';
+import cors from 'cors'
 
 const app = express();
+
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN, 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 // Middleware
 app.use(express.json());

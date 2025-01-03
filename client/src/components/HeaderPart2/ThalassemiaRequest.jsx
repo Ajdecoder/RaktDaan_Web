@@ -19,7 +19,7 @@ const ThalassemiaRequest = () => {
 
   return (
     <div className="p-20 min-h-screen flex items-center justify-center bg-gradient-to-r from-red-400 to-pink-500">
-      <div className=" max-w-3xl w-full bg-white rounded-lg shadow-lg ">
+      <div className=" max-w-3xl w-full bg-white rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 p-4">
         <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-6">
           Thalassemia Blood Request
         </h1>

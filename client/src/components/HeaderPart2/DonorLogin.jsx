@@ -1,9 +1,11 @@
 // src/components/DonorLogin.jsx
+import axios from "axios";
 import React, { useState } from "react";
+import { PORT_CLIENT } from "../../commonClient";
 
 const DonorLogin = () => {
   const [credentials, setCredentials] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -11,9 +13,19 @@ const DonorLogin = () => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Logging in...");
+
+    try {
+      const response = await axios.post(
+        `${PORT_CLIENT}/api/auth/donor-login`,
+        credentials
+      );
+      console.log("credentials",credentials)
+      console.log("response",response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -24,10 +36,10 @@ const DonorLogin = () => {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={credentials.username}
+            type="email"
+            name="email"
+            placeholder="email"
+            value={credentials.email}
             onChange={handleChange}
             className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             required

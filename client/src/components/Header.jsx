@@ -49,7 +49,7 @@ const Header = () => {
   };
 
   return (
-    <nav className="bg-transparent p-4" ref={headerRef}>
+    <nav className="bg-black p-4" ref={headerRef}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="text-white text-2xl font-bold">
           <Link to="/">

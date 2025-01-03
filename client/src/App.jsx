@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Home from "./components/Home";
 import AboutUs from "./components/HeaderPart1/AboutUs";
@@ -25,7 +25,21 @@ import CampRegistration from "./components/CampRegistration";
 import Gallery from "./components/HeaderPart1/ImageGallery";
 import NotificationPage from "./components/HeaderPart1/Notification";
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, [pathname]);
+
+  return null;
+};
 function App() {
+
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -33,6 +47,10 @@ function App() {
       setIsLoading(false); 
     }, 3000); 
   }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  })
 
   return (
     <Router>
@@ -48,6 +66,7 @@ function App() {
           {/* Render the main content after loading */}
           <Header />
           <main className="p-6">
+              <ScrollToTop />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about-RaktDaan" element={<AboutUs />} />

@@ -17,7 +17,7 @@ const LookingForBlood = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-red-400 to-pink-500">
-      <div className="max-w-4xl w-full bg-white rounded-lg shadow-lg p-8">
+      <div className="max-w-4xl w-full bg-white rounded-lg shadow-lg p-8 hover:scale-105 transition-transform duration-300">
         <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-6">
           Looking for Blood
         </h1>
