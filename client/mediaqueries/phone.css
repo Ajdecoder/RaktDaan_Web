@@ -1,0 +1,10 @@
+@media screen and (max-width: 600px) {
+  .contact-us {
+    padding: 0px !important;
+  }
+  .objectives-list{
+    display: flex;
+    flex-direction: column;
+  }
+}
+

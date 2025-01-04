@@ -6,37 +6,18 @@ import { headerData } from "./data/data";
 const Header = () => {
   const [activeMenu, setActiveMenu] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const headerRef = useRef(null); // Ref for the entire header to detect outside clicks
+  const headerRef = useRef(null);
 
-  // Handle click outside of the header to close menus
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (headerRef.current && !headerRef.current.contains(event.target)) {
-        setActiveMenu(null); // Close dropdowns
-        setIsMobileMenuOpen(false); // Close mobile menu
+        setActiveMenu(null);
+        setIsMobileMenuOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  // Close mobile menu on large screens
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 1024) {
-        setIsMobileMenuOpen(false); // Close the menu on large screens
-      }
-    };
-
-    // Add event listener on mount
-    window.addEventListener("resize", handleResize);
-
-    // Clean up on unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -49,75 +30,71 @@ const Header = () => {
   };
 
   return (
-    <nav className="bg-black p-4" ref={headerRef}>
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <div className="text-white text-2xl font-bold">
-          <Link to="/">
-            <img className="w-12 rounded-lg" src="/web_logo.jpg" alt="Logo" />
-          </Link>
-        </div>
+    <nav ref={headerRef} className="bg-black p-4 relative z-50">
+      <div className="max-w-7xl mx-auto flex justify-between items-center">
+        {/* Logo */}
+        <Link to="/" className="text-white text-2xl font-bold">
+          <img
+            className="web_logo w-12 rounded-lg "
+            src="/web_logo.jpg"
+            alt="Logo"
+          />
+        </Link>
 
-        {/* Mobile Hamburger Menu */}
-        <div className="lg:hidden">
-          <button onClick={toggleMobileMenu}>
-            {isMobileMenuOpen ? (
-              <FaTimes className="z-20 relative text-white text-3xl" />
-            ) : (
-              <FaBars className="z-20 relative text-white text-3xl" />
-            )}
-          </button>
-        </div>
+        {/* Hamburger Menu for Mobile */}
+        <button
+          onClick={toggleMobileMenu}
+          className="md:hidden text-white text-3xl w-auto"
+        >
+          {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+        </button>
 
-        {/* Mobile and Desktop Menu */}
+        {/* Navigation Menu */}
         <ul
-          className={`lg:flex lg:space-x-6 text-white absolute lg:relative lg:top-0 lg:left-0 bg-transparent p-4 lg:p-0 transition-all duration-300 ${
-            isMobileMenuOpen
-              ? "top-0 left-0 w-full h-screen flex flex-col justify-center items-center bg-black" // Add background only for mobile
-              : "top-[-100%] left-[-100%]"
+          className={`md:flex md:space-x-6 absolute md:static top-16 left-0 w-full md:w-auto bg-black md:bg-transparent ${
+            isMobileMenuOpen ? "block" : "hidden"
           }`}
         >
           {headerData.map((menu, index) => (
-            <li key={index} className="relative group">
+            <li
+              key={index}
+              className="relative group md:inline-block text-white p-1"
+            >
               {/* Menu Item */}
               <div
                 onClick={() => handleMenuToggle(index)}
-                className="flex items-center cursor-pointer p-2 bg-red-700 hover:bg-red-800 rounded transition-colors"
+                className="flex items-center justify-between cursor-pointer p-2 md:rounded hover:bg-red-700"
               >
                 {menu.title}
-                {activeMenu === index ? (
-                  <FaCaretUp className="ml-2" />
-                ) : (
-                  <FaCaretDown className="ml-2" />
-                )}
+                <span className="ml-2">
+                  {activeMenu === index ? <FaCaretUp /> : <FaCaretDown />}
+                </span>
               </div>
 
-              {/* Submenu */}
-              <div
-                className={`z-20 ${
-                  activeMenu === index ? "block" : "hidden"
+              {/* Dropdown Menu */}
+              <ul
+                className={`absolute left-0 mt-2 bg-white text-black rounded-md shadow-md transition-transform transform w-full ${
+                  activeMenu === index
+                    ? "scale-100 opacity-100"
+                    : "scale-0 opacity-0"
                 } ${
-                  isMobileMenuOpen
-                    ? "relative w-full" // Make submenu relative on mobile screens to stack vertically
-                    : "absolute left-0"
-                } bg-white text-black p-4 mt-2 rounded shadow-lg transition-all duration-300`}
-                style={{
-                  width: menu.title === "Blood Bank" ? "8rem" : "12rem", // Adjust width based on menu title
-                }}
+                  menu.title === "Blood Bank"
+                    ? "min-w-[8.3rem]"
+                    : "min-w-[11rem]"
+                }`}
               >
-                <ul>
-                  {menu.subHeaders.map((item, idx) => (
-                    <li key={idx} className="py-2">
-                      <Link
-                        to={item.link}
-                        className="hover:text-red-600 hover:relative hover:translate-x-3 ease-in-out duration-150"
-                        onClick={() => setActiveMenu(null)} // Close dropdown after clicking a link
-                      >
-                        {item.text}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                {menu.subHeaders.map((item, idx) => (
+                  <li key={idx} className="p-2 hover:bg-gray-200 hover:text-red-600">
+                    <Link
+                      to={item.link}
+                      onClick={() => setActiveMenu(null)}
+                      className="block"
+                    >
+                      {item.text}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </li>
           ))}
         </ul>

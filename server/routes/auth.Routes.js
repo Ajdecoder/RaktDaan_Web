@@ -1,5 +1,5 @@
 import express from 'express';
-import { donorLogin, campAdminLogin, raktdaanLogin, donorRegister, campAdminRegister,  } from '../controllers/authController.js';
+import { donorLogin, campAdminLogin, raktdaanLogin, donorRegister, campAdminRegister,  } from '../controllers/auth.controller.js';
 
 const authRoutes = express.Router();
 

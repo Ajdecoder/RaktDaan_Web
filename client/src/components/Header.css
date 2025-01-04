@@ -1,0 +1,19 @@
+.dropdown-menu {
+    position: absolute;
+    top: 100%; /* Position the dropdown below the parent menu */
+    left: 0;
+    margin-top: 0.5rem; /* Space between parent menu and dropdown */
+    z-index: 1000;
+  }
+
+  
+  .dropdown-menu-mobile {
+    position: relative;
+    width: 100%; /* Take full width on mobile */
+    margin-top: 0.5rem;
+  }
+
+  .menu-item {
+    position: relative; /* Ensure parent remains in place */
+  }
+  

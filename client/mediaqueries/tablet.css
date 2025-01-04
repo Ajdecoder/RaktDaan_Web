@@ -1,0 +1,14 @@
+@media only screen and (max-width: 768px) {
+   
+    .web_logo{
+        display: none;
+    }
+
+    .submenu {
+        min-width: 12rem; /* Default width for desktop */
+        max-width: 18rem; /* Prevent overly wide menus */
+      }
+
+  }
+  
+  

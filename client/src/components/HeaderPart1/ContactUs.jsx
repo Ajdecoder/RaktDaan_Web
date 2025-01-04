@@ -19,7 +19,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-400 to-blue-500 p-10">
+    <div className="contact-us min-h-screen flex items-center justify-center bg-gradient-to-r from-green-400 to-blue-500 p-10">
       <div className="max-w-2xl w-full bg-white rounded-lg shadow-lg p-8 hover:scale-105 transition-transform duration-300">
         <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-6">
           Contact Us

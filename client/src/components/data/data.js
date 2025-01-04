@@ -33,3 +33,30 @@ export const headerData = [
     ],
   },
 ];
+
+
+export const objectives = [
+  "Safe and Adequate Blood Supplies",
+  "Reduced Turnaround Time",
+  "Preventing Wastage of Blood",
+  "Restrict Professional Donors",
+  "Networking of Blood Banks",
+  "Donor Repository"
+];
+
+export const salientFeatures = [
+  "Web Based Application",
+  "Aadhar Linkage",
+  "Decision Support",
+  "Enforces Guidelines",
+  "Dashboard",
+  "Statutory Reports"
+];
+
+export const majorComponents = [
+  "The biometric Donor Management System for identifying, tracking, and blocking donors based on health, donation history, etc.",
+  "A centralized Blood Inventory Management System for tracking blood stock across numerous blood banks.",
+  "Bio-Medical Waste Management System for proper disposal of discarded blood and other waste generated during the process.",
+  "Generation of rare blood group donor registries and generation of regular repeat donors.",
+  "Alert and Notification System for real-time updates and notifications."
+];

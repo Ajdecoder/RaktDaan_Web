@@ -26,6 +26,8 @@ import Gallery from "./components/HeaderPart1/ImageGallery";
 import NotificationPage from "./components/HeaderPart1/Notification";
 import DonorSignup from "./components/AuthComponents/DonorSignup";
 import CampAdminSignup from "./components/AuthComponents/CampAdminSignup";
+import '../mediaqueries/phone.css'
+import '../mediaqueries/tablet.css'
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -42,7 +44,7 @@ const ScrollToTop = () => {
 function App() {
 
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
