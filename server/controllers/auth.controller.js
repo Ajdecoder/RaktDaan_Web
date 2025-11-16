@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Donor from "../models/Donor.modal.js";
 import CampAdmin from "../models/CampAdmin.modal.js";
+import BloodBank from "../models/BloodBank.modal.js";
 
 // Login for Donor
 export const donorLogin = async (req, res) => {
@@ -23,12 +24,12 @@ export const donorLogin = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ id: donor._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: donor._id, role: 'donor' }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.json({ token });
+    return res.json({ success: true, message: 'Login successful', data: { token } });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    res.status(500).json({ success: false, message: "Server error", data: null });
   }
 };
 
@@ -41,7 +42,7 @@ export const donorRegister = async (req, res) => {
     // Check if donor already exists
     const existingDonor = await Donor.findOne({ email });
     if (existingDonor) {
-      return res.status(400).json({ message: "Email already registered" });
+      return res.status(400).json({ success: false, message: "Email already registered", data: null });
     }
 
     // Hash the password
@@ -58,7 +59,7 @@ export const donorRegister = async (req, res) => {
     await newDonor.save();
 
     // Generate a JWT token for the donor
-    const token = jwt.sign({ id: newDonor._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: newDonor._id, role: 'donor' }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
@@ -66,15 +67,14 @@ export const donorRegister = async (req, res) => {
     res.cookie("jwttoken", token, { httpOnly: true });
 
     // Respond with success message and token
-    res.status(201).json({
+    return res.status(201).json({
+      success: true,
       message: "Donor registered successfully",
-      token,
+      data: { token, user: { id: newDonor._id, name: newDonor.name, email: newDonor.email } },
     });
   } catch (err) {
     console.error("Registration error:", err);
-    res
-      .status(500)
-      .json({ message: "Registration failed. Please try again later." });
+    return res.status(500).json({ success: false, message: "Registration failed. Please try again later.", data: null });
   }
 };
 
@@ -85,26 +85,22 @@ export const campAdminLogin = async (req, res) => {
     const campAdmin = await CampAdmin.findOne({ email });
 
     if (!campAdmin) {
-      return res.status(400).json({ message: "Camp Admin not found" });
+      return res.status(400).json({ success: false, message: "Camp Admin not found", data: null });
     }
 
     const isMatch = await campAdmin.matchPassword(password);
 
-    console.log(password);
-    console.log(campAdmin.password);
-    console.log(isMatch);
-
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({ success: false, message: "Invalid credentials", data: null });
     }
 
-    const token = jwt.sign({ id: campAdmin._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: campAdmin._id, role: 'campadmin' }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.json({ token });
+    return res.json({ success: true, message: 'Login successful', data: { token } });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
     console.log(error)
+    return res.status(500).json({ success: false, message: "Server error", data: null });
   }
 };
 
@@ -115,7 +111,7 @@ export const campAdminRegister = async (req, res) => {
     const campAdminExists = await CampAdmin.findOne({ email });
 
     if (campAdminExists) {
-      return res.status(400).json({ message: "Camp Admin already exists" });
+      return res.status(400).json({ success: false, message: "Camp Admin already exists", data: null });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -123,9 +119,10 @@ export const campAdminRegister = async (req, res) => {
     const campAdmin = new CampAdmin({ name, email, password: hashedPassword });
     await campAdmin.save();
 
-    res.status(201).json({ message: "Camp Admin registered successfully" });
+    return res.status(201).json({ success: true, message: "Camp Admin registered successfully", data: { id: campAdmin._id, name: campAdmin.name, email: campAdmin.email } });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    console.error("Error in campAdminRegister:", error); // Log the exact error
+    return res.status(500).json({ success: false, message: "Server error", data: null });
   }
 };
 
@@ -144,13 +141,125 @@ export const raktdaanLogin = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: admin._id, role: 'raktdaan' }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.json({ token });
+    return res.json({ success: true, message: 'Login successful', data: { token } });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    return res.status(500).json({ success: false, message: "Server error", data: null });
+  }
+};
+
+export const raktdaanRegister = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    // basic validation
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "Name, email and password are required" });
+    }
+
+    // check if admin already exists
+    const existingAdmin = await CampAdmin.findOne({ email });
+    if (existingAdmin) {
+      return res.status(400).json({ message: "RaktDaan admin already exists" });
+    }
+
+    // hash password and create admin with elevated role
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const admin = new CampAdmin({
+      name,
+      email,
+      password: hashedPassword,
+      role: "raktdaan", // optional: identify this as RaktDaan admin
+      isSuperAdmin: true, // optional flag if your schema supports it
+    });
+
+    await admin.save();
+
+    // generate token
+    const token = jwt.sign({ id: admin._id, role: admin.role || 'raktdaan' }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    // respond with token
+    return res.status(201).json({ success: true, message: "RaktDaan admin registered successfully", data: { token, user: { id: admin._id, name: admin.name, email: admin.email } } });
+  } catch (error) {
+    console.error("RaktDaan registration error:", error);
+    return res.status(500).json({ success: false, message: "Server error", data: null });
   }
 };
 
 
+
+export const registerBloodBank = async (req, res) => {
+  try {
+    const {
+      name,
+      address,
+      contactNumber,
+      email,
+      parentHospital,
+      shortName,
+      category,
+      contactPerson,
+      firstRegistrationDate,
+      licenceNo,
+      fromDate,
+      toDate,
+      componentFacility,
+      apheresisFacility,
+      helplineNumber,
+      address1,
+      address2,
+      pincode,
+      latitude,
+      longitude,
+      website,
+      noOfBeds,
+      state,
+      district,
+      city,
+    } = req.body;
+
+    // check duplicate email
+    const existing = await BloodBank.findOne({ email });
+    if (existing) {
+      return res.status(400).json({ success: false, message: "Blood bank with this email already exists.", data: null });
+    }
+
+    const bloodBank = await BloodBank.create({
+      name,
+      address,
+      contactNumber,
+      email,
+      parentHospital,
+      shortName,
+      category,
+      contactPerson,
+      firstRegistrationDate,
+      licenceNo,
+      fromDate,
+      toDate,
+      componentFacility,
+      apheresisFacility,
+      helplineNumber,
+      address1,
+      address2,
+      pincode,
+      latitude,
+      longitude,
+      website,
+      noOfBeds,
+      state,
+      district,
+      city,
+    });
+
+    return res.status(201).json({ success: true, message: "Blood bank registered successfully.", data: bloodBank });
+
+  } catch (error) {
+    console.error("Error registering blood bank:", error);
+    return res.status(500).json({ success: false, message: "Server error.", data: null });
+  }
+};

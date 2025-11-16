@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { PORT_CLIENT } from "../../commonClient";
 
 const DonorSignup = () => {
   const [formData, setFormData] = useState({
@@ -28,7 +29,7 @@ const DonorSignup = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/auth/donor-signup`,
+        `${PORT_CLIENT}/api/auth/donor-register`,
         formData
       );
       setSuccess("Signup successful! Redirecting to login...");
@@ -36,7 +37,7 @@ const DonorSignup = () => {
 
       // Redirect after signup (example: to login page)
       setTimeout(() => {
-        window.location.href = "/login";
+        window.location.href = "/donor-login";
       }, 2000);
     } catch (error) {
       setError(

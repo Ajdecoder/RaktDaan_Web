@@ -1,6 +1,7 @@
 // src/components/RaktDaanLogin.jsx
 import React, { useState } from "react";
 import axios from "axios";
+import { PORT_CLIENT } from "../../commonClient";
 
 const RaktDaanLogin = () => {
   const [email, setEmail] = useState("");
@@ -12,7 +13,7 @@ const RaktDaanLogin = () => {
     setError(""); // Reset error state
 
     try {
-      const response = await axios.post("/api/auth/login", { email, password });
+      const response = await axios.post(`${PORT_CLIENT}/api/auth/raktdaan-login`, { email, password });
       console.log("Login successful", response.data);
       alert("Logged in successfully");
       // Redirect or save token logic here

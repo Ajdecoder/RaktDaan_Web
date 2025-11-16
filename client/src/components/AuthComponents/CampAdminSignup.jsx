@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { PORT_CLIENT } from '../../commonClient';
 
 const CampAdminSignup = () => {
   const [adminDetails, setAdminDetails] = useState({
-    username: '',
+    name: '', // Changed from 'username' to 'name'
     email: '',
     password: '',
   });
@@ -12,12 +14,23 @@ const CampAdminSignup = () => {
     setAdminDetails({ ...adminDetails, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Admin Registered:', adminDetails);
-
-    // Add logic to send `adminDetails` to the backend
-    alert('Registration successful!');
+    try {
+      const response = await axios.post(
+        `${PORT_CLIENT}/api/auth/camp-admin-register`,
+        adminDetails
+      );
+      console.log(response)
+      alert('Registration successful!');
+      console.log(response.data);
+      // Redirect to login page
+      window.location.href = '/camp-admin-login';
+    } catch (error) {
+      console.log(error)
+      alert('Registration failed!');
+      console.error(error);
+    }
   };
 
   return (
@@ -25,15 +38,15 @@ const CampAdminSignup = () => {
       <h2 className="text-2xl font-semibold text-center mb-4">Camp Admin Registration</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label htmlFor="email" className="block text-lg font-medium mb-2">UserName</label>
+          <label htmlFor="name" className="block text-lg font-medium mb-2">Name</label>
           <input
             type="text"
-            id="username"
-            name="email"
-            value={adminDetails.username}
+            id="name"
+            name="name"
+            value={adminDetails.name}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded-lg"
-            placeholder="Enter your email"
+            placeholder="Enter your name"
             required
           />
         </div>

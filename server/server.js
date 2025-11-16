@@ -1,13 +1,13 @@
 import express from 'express';
 import { connectDB } from './config/db.js';
-import {userRoutes} from './routes/userRoutes.js'
-import authRoutes from './routes/auth.Routes.js';
+import {userRoutes} from './routes/user.routes..js'
+import authRoutes from './routes/auth.routes.js';
 import cors from 'cors'
 
 const app = express();
 
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN, 
+  origin: process.env.CORS_ORIGIN || 'http://localhost:5173', 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 };

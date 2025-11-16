@@ -73,9 +73,9 @@ export const addBloodBank = async (req, res) => {
         city,
       });
       await bloodBank.save();
-  
-      res.status(201).json({ message: "Blood Bank registered successfully" });
+
+      return res.status(201).json({ success: true, message: "Blood Bank registered successfully", data: bloodBank });
     } catch (error) {
-      res.status(500).json({ message: "Server error", error });
+      return res.status(500).json({ success: false, message: "Server error", data: null });
     }
   };

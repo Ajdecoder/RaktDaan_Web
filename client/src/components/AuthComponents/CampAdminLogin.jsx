@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { PORT_CLIENT } from "../../commonClient";
 
 const CampAdminLogin = () => {
   const [credentials, setCredentials] = useState({
@@ -11,9 +13,22 @@ const CampAdminLogin = () => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Camp Admin logging in...");
+    try {
+      const response = await axios.post(
+        `${PORT_CLIENT}/api/auth/camp-admin-login`,
+        credentials
+      );
+      alert("Login successful!");
+      console.log(response.data);
+      // Redirect to dashboard
+      window.location.href = "/dashboard";
+    } catch (error) {
+      console.log(error?.response?.data.message)
+      alert(error?.response?.data.message);
+      console.error(error);
+    }
   };
 
   return (
@@ -28,7 +43,7 @@ const CampAdminLogin = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* email */}
           <div>
-            <label 
+            <label
               htmlFor="email"
               className="block text-sm font-medium text-gray-700"
             >
